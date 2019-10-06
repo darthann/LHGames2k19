@@ -49,6 +49,7 @@ def findBestNeighbourTile(game_info):
         # TODO Check si le nombre de coup possible est supérieur al a distance totale d'aller retour
         print("Shortest distance is {} from [{}, {}] to [{}, {}]".format(distanceMin, current_tile.position.y, current_tile.position.x, tile_min.position.y, tile_min.position.x))
         if distanceMin == 0:
+            print("DISTANCE IS BUGGED")
             return None
         else:
             return tile_min
@@ -163,3 +164,36 @@ def tilesAreInVisited(visited, array):
         if flag:
             temp.append(tile)
     return temp
+
+
+def closestTail(game_info):
+    # UP
+    if game_info.host_player.position.x + 1 <= 15:
+        coordinates = Point(game_info.host_player.position.y, game_info.host_player.position.x + 1)
+        if hasTailInTile(game_info, coordinates):
+            return game_info.map.tiles[coordinates.y][coordinates.x]
+    # DOWN
+    if game_info.host_player.position.x - 1 >= 2:
+        coordinates = Point(game_info.host_player.position.y, game_info.host_player.position.x - 1)
+        if hasTailInTile(game_info, coordinates):
+            return game_info.map.tiles[coordinates.y][coordinates.x]
+    # LEFT
+    if game_info.host_player.position.y + 1 <= 15:
+        coordinates = Point(game_info.host_player.position.y + 1, game_info.host_player.position.x)
+        if hasTailInTile(game_info, coordinates):
+            return game_info.map.tiles[coordinates.y][coordinates.x]
+    # RIGHT
+    if game_info.host_player.position.y - 1 >= 2:
+        coordinates = Point(game_info.host_player.position.y - 1, game_info.host_player.position.x)
+        if hasTailInTile(game_info, coordinates):
+            return game_info.map.tiles[coordinates.y][coordinates.x]
+    return None
+
+
+def hasTailInTile(game_info, position):
+    team_number = game_info.host_player.team_number
+    temp = game_info.map.tiles[position.y][position.x].team_tail
+    if temp is not None and temp != team_number:
+        return True
+    else:
+        return False

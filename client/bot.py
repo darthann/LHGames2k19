@@ -29,6 +29,14 @@ class Bot(object):
         if current_position not in self.visited:
             self.visited.append(current_position)
 
+        # Find close tail
+        tp = bot_calc.closestTail(game_info)
+        if tp is not None:
+            print("Enemy tail found close !")
+            move = bot_calc.movementToTile(current_tile, tp)
+            print(move)
+            return move
+
         if bot_calc.isHome(game_info):
             self.visited = [current_position]
             destination = bot_calc.findBestNeighbourTile(game_info)
