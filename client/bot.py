@@ -25,14 +25,14 @@ class Bot(object):
         current_position = game_info.host_player.position
         current_tile = game_info.map.tiles[current_position.y][current_position.x]
 
-        print("Bot current position [{}, {}]".format(current_position.y, current_position.x))
+        print("Bot current position => [{}, {}]".format(current_position.y, current_position.x))
         if current_position not in self.visited:
             self.visited.append(current_position)
 
         # Find close tail
         tp = bot_calc.closestTail(game_info)
         if tp is not None:
-            print("Enemy tail found close !")
+            print("Enemy tail found close ! => [{}, {}]".format(tp.position.y, tp.position.x))
             move = bot_calc.movementToTile(current_tile, tp)
             print(move)
             return move
@@ -53,14 +53,13 @@ class Bot(object):
             end = (destination.position.y, destination.position.x)
             map_bin = bot_calc.mapMaker(game_info, self.visited)
             path = astart.astar(map_bin, start, end)
-            print(path)
             if path.__len__() > 1:
                 move = bot_calc.movementToPos((current_position.y, current_position.x), path[1])
-                print(">1 NEXT TILE IS : [{}, {}]".format(path[1][0], path[1][1]))
+                print("Bot destination => [{}, {}]".format(path[1][0], path[1][1]))
             elif path.__len__() == 1:
                 # [(11, 5), (12, 5), (12, 4)]
                 move = bot_calc.movementToPos((current_position.y, current_position.x), path[0])
-                print("==1 NEXT TILE IS : [{}, {}]".format(path[0][0], path[0][1]))
+                print("Bot destination (len is 1) => [{}, {}]".format(path[0][0], path[0][1]))
 
             print(move)
 
