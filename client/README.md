@@ -14,6 +14,12 @@ pip install signalrcore
 ```bash
 python main.py GAME_SERVER=ws://localhost:5001
 ```
+
+Steps to launch :
+Start server
+Go to website : https://live.lhgames.io/
+Run code
+
 ---
 ## Instructions
 
